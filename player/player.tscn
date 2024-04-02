@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://ybb6hnxg06x3"]
+
+[ext_resource type="Script" path="res://player/player.gd" id="1_qivkk"]
+[ext_resource type="PackedScene" uid="uid://dxojbaivvs486" path="res://player/animations.tscn" id="2_u1111"]
+[ext_resource type="PackedScene" uid="uid://cd8fgo386pidw" path="res://interaction/player_interactor.tscn" id="3_eu2xu"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_651b5"]
+radius = 0.375919
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_271oi"]
+size = Vector3(0.569834, 0.673828, 3.00735)
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_qivkk")
+
+[node name="Mesh" type="Node3D" parent="."]
+
+[node name="animations" parent="Mesh" instance=ExtResource("2_u1111")]
+transform = Transform3D(-1.1, 0, -9.61651e-08, 0, 1.1, 0, 9.61651e-08, 0, -1.1, 0, -1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_651b5")
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1.75)
+near = 0.1
+far = 1000.0
+
+[node name="PlayerInteractor" parent="Head" node_paths=PackedStringArray("player") instance=ExtResource("3_eu2xu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.8, 0)
+player = NodePath("../..")
+
+[node name="CollisionShape3D" parent="Head/PlayerInteractor" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00636959, 0.673414, -1.10909)
+shape = SubResource("BoxShape3D_271oi")
+
+[editable path="Head/PlayerInteractor"]

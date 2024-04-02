@@ -1,0 +1,144 @@
+[gd_scene load_steps=22 format=3 uid="uid://b8r35oo5f3665"]
+
+[ext_resource type="Terrain3DStorage" uid="uid://uwjrhf3m4idc" path="res://assets/new_terrain_3d_storage.res" id="1_640gl"]
+[ext_resource type="Script" path="res://main.gd" id="1_knyo2"]
+[ext_resource type="Texture2D" uid="uid://cxs4xv7yuuj62" path="res://assets/gray_rocks_diff_1k.png" id="2_0704o"]
+[ext_resource type="Shader" path="res://assets/sky.gdshader" id="2_tip86"]
+[ext_resource type="Texture2D" uid="uid://k6w8su5j843x" path="res://assets/gray_rocks_nor_gl_1k.png" id="3_12d5u"]
+[ext_resource type="PackedScene" uid="uid://ybb6hnxg06x3" path="res://player/player.tscn" id="4_qtbdw"]
+[ext_resource type="Texture2D" uid="uid://d1nxxho7ous0d" path="res://assets/brown_mud_leaves_01_diff_1k.png" id="6_eeci7"]
+[ext_resource type="Texture2D" uid="uid://d0an2tv5an7by" path="res://assets/brown_mud_leaves_01_nor_gl_1k.png" id="7_ib0ji"]
+[ext_resource type="PackedScene" uid="uid://r0ln23k0c6w1" path="res://props/box/Box.tscn" id="10_gpur1"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_a6wl6"]
+shader = ExtResource("2_tip86")
+shader_parameter/day_top_color = Color(0.1, 0.6, 1, 1)
+shader_parameter/day_bottom_color = Color(0.4, 0.8, 1, 1)
+shader_parameter/sunset_top_color = Color(0.7, 0.75, 1, 1)
+shader_parameter/sunset_bottom_color = Color(1, 0.5, 0.7, 1)
+shader_parameter/night_top_color = Color(0.02, 0, 0.04, 1)
+shader_parameter/night_bottom_color = Color(0.1, 0, 0.2, 1)
+shader_parameter/horizon_color = Color(0, 0.7, 0.8, 1)
+shader_parameter/horizon_blur = 0.05
+shader_parameter/sun_color = Color(10, 8, 1, 1)
+shader_parameter/sun_sunset_color = Color(10, 0, 0, 1)
+shader_parameter/sun_size = 0.2
+shader_parameter/sun_blur = 10.0
+shader_parameter/moon_color = Color(1, 0.95, 0.7, 1)
+shader_parameter/moon_size = 0.06
+shader_parameter/moon_blur = 0.1
+shader_parameter/clouds_edge_color = Color(0.8, 0.8, 0.98, 1)
+shader_parameter/clouds_top_color = Color(1, 1, 1, 1)
+shader_parameter/clouds_middle_color = Color(0.92, 0.92, 0.98, 1)
+shader_parameter/clouds_bottom_color = Color(0.83, 0.83, 0.94, 1)
+shader_parameter/clouds_speed = 2.0
+shader_parameter/clouds_direction = 0.2
+shader_parameter/clouds_scale = 1.0
+shader_parameter/clouds_cutoff = 0.3
+shader_parameter/clouds_fuzziness = 0.5
+shader_parameter/clouds_weight = 0.0
+shader_parameter/clouds_blur = 0.25
+shader_parameter/stars_speed = 1.0
+shader_parameter/overwritten_time = 0.0
+
+[sub_resource type="Sky" id="Sky_b3ift"]
+sky_material = SubResource("ShaderMaterial_a6wl6")
+
+[sub_resource type="Environment" id="Environment_02gqj"]
+background_mode = 2
+sky = SubResource("Sky_b3ift")
+tonemap_mode = 2
+ssao_enabled = true
+sdfgi_enabled = true
+sdfgi_use_occlusion = true
+glow_enabled = true
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.01
+
+[sub_resource type="Gradient" id="Gradient_18ucj"]
+offsets = PackedFloat32Array(0.2, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_sli6h"]
+noise_type = 2
+frequency = 0.03
+cellular_jitter = 3.0
+cellular_return_type = 0
+domain_warp_enabled = true
+domain_warp_type = 1
+domain_warp_amplitude = 50.0
+domain_warp_fractal_type = 2
+domain_warp_fractal_lacunarity = 1.5
+domain_warp_fractal_gain = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_1634q"]
+seamless = true
+color_ramp = SubResource("Gradient_18ucj")
+noise = SubResource("FastNoiseLite_sli6h")
+
+[sub_resource type="Terrain3DMaterial" id="Terrain3DMaterial_ghn6m"]
+_shader_parameters = {
+"_mouse_layer": 2147483648,
+"blend_sharpness": null,
+"height_blending": null,
+"macro_variation1": null,
+"macro_variation2": null,
+"noise1_angle": null,
+"noise1_offset": null,
+"noise1_scale": null,
+"noise2_scale": null,
+"noise3_scale": null,
+"noise_texture": SubResource("NoiseTexture2D_1634q")
+}
+
+[sub_resource type="Terrain3DTexture" id="Terrain3DTexture_d24in"]
+name = "Rocks"
+albedo_texture = ExtResource("2_0704o")
+normal_texture = ExtResource("3_12d5u")
+uv_scale = 1.0
+uv_rotation = 0.323
+
+[sub_resource type="Terrain3DTexture" id="Terrain3DTexture_4yk11"]
+texture_id = 1
+albedo_texture = ExtResource("6_eeci7")
+normal_texture = ExtResource("7_ib0ji")
+uv_scale = 1.0
+uv_rotation = 0.354
+
+[sub_resource type="Terrain3DTextureList" id="Terrain3DTextureList_0qfci"]
+textures = Array[Terrain3DTexture]([SubResource("Terrain3DTexture_d24in"), SubResource("Terrain3DTexture_4yk11")])
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k511c"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_fq674"]
+material = SubResource("StandardMaterial3D_k511c")
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_knyo2")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_02gqj")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.695553, 0.366081, 0.618216, 0.0512211, -0.833001, 0.550895, 0.716647, 0.414842, 0.560645, 0, 2.2213, 0)
+shadow_enabled = true
+
+[node name="Terrain3D" type="Terrain3D" parent="."]
+storage = ExtResource("1_640gl")
+material = SubResource("Terrain3DMaterial_ghn6m")
+texture_list = SubResource("Terrain3DTextureList_0qfci")
+
+[node name="Player" parent="." instance=ExtResource("4_qtbdw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="Box" parent="." instance=ExtResource("10_gpur1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -6)
+
+[node name="Box2" parent="." instance=ExtResource("10_gpur1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0.5, -6)
+
+[node name="MeshInstance3D" parent="Box2" index="0"]
+mesh = SubResource("BoxMesh_fq674")
+
+[editable path="Box2"]
+[editable path="Box2/Interactable"]
