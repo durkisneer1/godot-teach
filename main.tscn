@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://b8r35oo5f3665"]
+[gd_scene load_steps=49 format=3 uid="uid://b8r35oo5f3665"]
 
 [ext_resource type="Terrain3DStorage" uid="uid://uwjrhf3m4idc" path="res://assets/new_terrain_3d_storage.res" id="1_640gl"]
 [ext_resource type="Script" path="res://main.gd" id="1_knyo2"]
@@ -10,6 +10,13 @@
 [ext_resource type="Texture2D" uid="uid://d0an2tv5an7by" path="res://assets/brown_mud_leaves_01_nor_gl_1k.png" id="7_ib0ji"]
 [ext_resource type="PackedScene" uid="uid://ddhlc7wm262q1" path="res://props/button/button.tscn" id="10_341v4"]
 [ext_resource type="PackedScene" uid="uid://r0ln23k0c6w1" path="res://props/box/Box.tscn" id="10_gpur1"]
+[ext_resource type="PackedScene" uid="uid://ceuavb8jmpgls" path="res://buildings/house.tscn" id="11_owsfe"]
+[ext_resource type="Shader" uid="uid://d06v0tvp8aql3" path="res://assets/Fire.tres" id="12_bt4o8"]
+[ext_resource type="Texture2D" uid="uid://d3ffihluy0g8k" path="res://assets/Flame01.png" id="13_b7c8j"]
+[ext_resource type="Texture2D" uid="uid://dabmgm43esmg6" path="res://assets/Voronoi01.png" id="13_stmy7"]
+[ext_resource type="Texture2D" uid="uid://cv6ubb3ww2ft5" path="res://assets/Flame02.png" id="15_aahed"]
+[ext_resource type="Shader" uid="uid://c7hd4o0a53pfv" path="res://assets/SimpleParticles.tres" id="16_4tk8u"]
+[ext_resource type="Texture2D" uid="uid://mmucvy11xe80" path="res://assets/Flare00.PNG" id="17_7vweq"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_a6wl6"]
 shader = ExtResource("2_tip86")
@@ -49,9 +56,14 @@ sky_material = SubResource("ShaderMaterial_a6wl6")
 background_mode = 2
 sky = SubResource("Sky_b3ift")
 tonemap_mode = 2
+tonemap_exposure = 0.6
+tonemap_white = 0.75
 ssao_enabled = true
 sdfgi_enabled = true
 sdfgi_use_occlusion = true
+sdfgi_read_sky_light = false
+glow_enabled = true
+glow_normalized = true
 volumetric_fog_enabled = true
 volumetric_fog_density = 0.01
 
@@ -108,11 +120,139 @@ uv_rotation = 0.354
 [sub_resource type="Terrain3DTextureList" id="Terrain3DTextureList_0qfci"]
 textures = Array[Terrain3DTexture]([SubResource("Terrain3DTexture_d24in"), SubResource("Terrain3DTexture_4yk11")])
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lnqp5"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_uspsq"]
+material = SubResource("StandardMaterial3D_lnqp5")
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_2qj76"]
 size = Vector3(1, 5, 8)
 
 [sub_resource type="BoxMesh" id="BoxMesh_74o8k"]
 size = Vector3(1, 5, 8)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mvpg6"]
+render_priority = 0
+shader = ExtResource("12_bt4o8")
+shader_parameter/DissolveTiling = Vector2(0.25, 0.2)
+shader_parameter/DissolveSpeed = Vector2(0, 0.1)
+shader_parameter/DissolveAmount = 0.5
+shader_parameter/MainTex = ExtResource("13_b7c8j")
+shader_parameter/DissolveTexture = ExtResource("13_stmy7")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_87ghi"]
+gravity = Vector3(0, 0, 0)
+color = Color(4, 1.25, 0.6, 0.8)
+
+[sub_resource type="QuadMesh" id="QuadMesh_kamu3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hcfth"]
+render_priority = 0
+shader = ExtResource("12_bt4o8")
+shader_parameter/DissolveTiling = Vector2(1, 1)
+shader_parameter/DissolveSpeed = Vector2(0, 0)
+shader_parameter/DissolveAmount = 0.0
+shader_parameter/MainTex = ExtResource("15_aahed")
+shader_parameter/DissolveTexture = ExtResource("13_stmy7")
+
+[sub_resource type="Curve" id="Curve_23svp"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.25, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_nr1ym"]
+curve = SubResource("Curve_23svp")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ldpv7"]
+emission_shape = 1
+emission_sphere_radius = 0.2
+angle_min = -360.0
+angle_max = 360.0
+gravity = Vector3(0, 5, 0)
+damping_min = 0.5
+damping_max = 1.0
+scale_min = 0.75
+scale_max = 1.5
+scale_curve = SubResource("CurveTexture_nr1ym")
+color = Color(4.01176, 1.2549, 0.623529, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_mcbo8"]
+
+[sub_resource type="Gradient" id="Gradient_4qrip"]
+offsets = PackedFloat32Array(0, 0.347222, 0.62963, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_gxael"]
+gradient = SubResource("Gradient_4qrip")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_v2l3m"]
+emission_shape = 1
+emission_sphere_radius = 0.3
+angle_min = -360.0
+angle_max = 360.0
+gravity = Vector3(0, 5, 0)
+damping_min = 0.5
+damping_max = 1.0
+scale_min = 0.75
+scale_max = 2.5
+scale_curve = SubResource("CurveTexture_nr1ym")
+color = Color(0, 0, 0, 1)
+color_ramp = SubResource("GradientTexture1D_gxael")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2f2th"]
+render_priority = 0
+shader = ExtResource("16_4tk8u")
+shader_parameter/MainTex = ExtResource("17_7vweq")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_086e6"]
+emission_shape = 1
+emission_sphere_radius = 0.6
+gravity = Vector3(0, 4, 0)
+scale_min = 0.01
+scale_max = 0.12
+color = Color(4.01176, 1.2549, 0.623529, 1)
+turbulence_enabled = true
+turbulence_noise_strength = 2.0
+turbulence_noise_scale = 5.0
+turbulence_influence_min = 0.05
+turbulence_influence_max = 0.3
+
+[sub_resource type="QuadMesh" id="QuadMesh_gqw50"]
+
+[sub_resource type="Animation" id="Animation_x8l38"]
+resource_name = "button_press"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Button:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(8.69805, 1.41324, 0), Vector3(8.83193, 1.41324, 0), Vector3(8.698, 1.413, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_fplja"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Button:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(8.69805, 1.41324, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_de30w"]
+_data = {
+"RESET": SubResource("Animation_fplja"),
+"button_press": SubResource("Animation_x8l38")
+}
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_knyo2")
@@ -121,7 +261,7 @@ script = ExtResource("1_knyo2")
 environment = SubResource("Environment_02gqj")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.489874, -0.272775, 0.82802, 0.496428, -0.868043, 0.0077372, 0.716647, 0.414843, 0.560645, 0, 2.2213, 0)
+transform = Transform3D(-0.891374, -0.271736, 0.362784, 0.398746, -0.0895154, 0.912682, -0.215534, 0.9582, 0.188145, 0, 2.2213, 0)
 shadow_enabled = true
 
 [node name="Terrain3D" type="Terrain3D" parent="."]
@@ -138,6 +278,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -6)
 [node name="Box2" parent="." instance=ExtResource("10_gpur1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0.5, -6)
 
+[node name="MeshInstance3D" parent="Box2/Root" index="0"]
+mesh = SubResource("BoxMesh_uspsq")
+
 [node name="Wall" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.289, 2.40151, 0)
 
@@ -150,6 +293,57 @@ skeleton = NodePath("../..")
 
 [node name="Button" parent="." instance=ExtResource("10_341v4")]
 transform = Transform3D(-1.47952e-08, 0, -0.338475, 0, 0.338475, 0, 0.338475, 0, -1.47952e-08, 8.69805, 1.41324, 0)
+
+[node name="house" parent="." instance=ExtResource("11_owsfe")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2.256, 0, -16.561)
+
+[node name="SpotLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.24804, 1.89586, -17.6938)
+light_color = Color(1, 0.776471, 0.643137, 1)
+light_energy = 1.421
+light_indirect_energy = 0.0
+light_volumetric_fog_energy = 1.737
+light_size = 0.112
+omni_range = 10.0
+omni_attenuation = 1.5
+
+[node name="VFXFire" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.33824, 0.243253, -18.052)
+
+[node name="StaticFlame" type="GPUParticles3D" parent="VFXFire"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.410098, 0)
+material_override = SubResource("ShaderMaterial_mvpg6")
+amount = 1
+lifetime = 5.0
+process_material = SubResource("ParticleProcessMaterial_87ghi")
+draw_pass_1 = SubResource("QuadMesh_kamu3")
+
+[node name="Flames" type="GPUParticles3D" parent="VFXFire"]
+material_override = SubResource("ShaderMaterial_hcfth")
+amount = 20
+lifetime = 1.2
+process_material = SubResource("ParticleProcessMaterial_ldpv7")
+draw_pass_1 = SubResource("QuadMesh_mcbo8")
+
+[node name="Smoke" type="GPUParticles3D" parent="VFXFire"]
+sorting_offset = -1.0
+material_override = SubResource("ShaderMaterial_hcfth")
+amount = 20
+lifetime = 2.5
+process_material = SubResource("ParticleProcessMaterial_v2l3m")
+draw_pass_1 = SubResource("QuadMesh_mcbo8")
+
+[node name="ParticlesFloating" type="GPUParticles3D" parent="VFXFire"]
+sorting_offset = 1.0
+material_override = SubResource("ShaderMaterial_2f2th")
+lifetime = 2.0
+process_material = SubResource("ParticleProcessMaterial_086e6")
+draw_pass_1 = SubResource("QuadMesh_gqw50")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_de30w")
+}
 
 [editable path="Box2"]
 [editable path="Box2/Root/Interactable"]

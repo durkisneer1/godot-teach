@@ -5,7 +5,7 @@ extends Node3D
 
 
 func _on_interactable_focused(_interactor):
-	mesh.mesh.material.albedo_color = Color(0, 255, 0)
+	mesh.mesh.material.albedo_color = Color("#37522f")
 
 
 func _on_interactable_interacted(_interactor):
@@ -13,4 +13,4 @@ func _on_interactable_interacted(_interactor):
 
 
 func _on_interactable_unfocused(_interactor):
-	mesh.mesh.material.albedo_color = Color(255, 0, 0)
+	mesh.mesh.material.albedo_color = Color("#541511")
