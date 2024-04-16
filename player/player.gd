@@ -31,7 +31,7 @@ func _physics_process(delta):
 	var input_dir = Input.get_vector("left", "right", "forward", "backward")
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	
-	if input_dir.length() > 0:
+	if input_dir:
 		mesh.rotation.y = lerp_angle(
 			mesh.rotation.y,
 			head.rotation.y + input_dir.angle_to(Vector2.UP),

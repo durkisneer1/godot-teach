@@ -14,12 +14,11 @@ func unfocus(interactable: Interactable):
 	interactable.unfocused.emit(self)
 	
 func get_closest_interactable() -> Interactable:
-	var list: Array[Area3D] = get_overlapping_areas()
 	var distance: float
 	var closest_distance: float = INF
 	var closest: Interactable = null
 	
-	for interactable in list:
+	for interactable in get_overlapping_areas():
 		distance = interactable.global_position.distance_to(global_position)
 		if distance < closest_distance:
 			closest = interactable as Interactable
