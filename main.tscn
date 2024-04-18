@@ -269,6 +269,7 @@ shadow_enabled = true
 storage = ExtResource("1_640gl")
 material = SubResource("Terrain3DMaterial_ghn6m")
 texture_list = SubResource("Terrain3DTextureList_0qfci")
+collision_mask = 0
 
 [node name="Player" parent="." instance=ExtResource("4_qtbdw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

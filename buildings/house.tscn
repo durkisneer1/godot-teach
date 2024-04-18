@@ -18,6 +18,7 @@ size = Vector3(0.409424, 5.38684, 15.3787)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." index="5"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.50671, 2.70981, 4.30736)
+collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0"]
 shape = SubResource("BoxShape3D_r373i")
