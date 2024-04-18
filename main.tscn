@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://b8r35oo5f3665"]
+[gd_scene load_steps=50 format=3 uid="uid://b8r35oo5f3665"]
 
 [ext_resource type="Terrain3DStorage" uid="uid://uwjrhf3m4idc" path="res://assets/new_terrain_3d_storage.res" id="1_640gl"]
 [ext_resource type="Script" path="res://main.gd" id="1_knyo2"]
@@ -17,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://cv6ubb3ww2ft5" path="res://assets/Flame02.png" id="15_aahed"]
 [ext_resource type="Shader" uid="uid://c7hd4o0a53pfv" path="res://assets/SimpleParticles.tres" id="16_4tk8u"]
 [ext_resource type="Texture2D" uid="uid://mmucvy11xe80" path="res://assets/Flare00.PNG" id="17_7vweq"]
+[ext_resource type="PackedScene" uid="uid://7cww5waiw6vb" path="res://props/car/car.tscn" id="18_styl8"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_a6wl6"]
 shader = ExtResource("2_tip86")
@@ -218,21 +219,6 @@ turbulence_influence_max = 0.3
 
 [sub_resource type="QuadMesh" id="QuadMesh_gqw50"]
 
-[sub_resource type="Animation" id="Animation_x8l38"]
-resource_name = "button_press"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Button:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5, 1),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector3(8.69805, 1.41324, 0), Vector3(8.83193, 1.41324, 0), Vector3(8.698, 1.413, 0)]
-}
-
 [sub_resource type="Animation" id="Animation_fplja"]
 length = 0.001
 tracks/0/type = "value"
@@ -246,6 +232,21 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector3(8.69805, 1.41324, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_x8l38"]
+resource_name = "button_press"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Button:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(8.69805, 1.41324, 0), Vector3(8.83193, 1.41324, 0), Vector3(8.698, 1.413, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_de30w"]
@@ -344,6 +345,9 @@ draw_pass_1 = SubResource("QuadMesh_gqw50")
 libraries = {
 "": SubResource("AnimationLibrary_de30w")
 }
+
+[node name="car" parent="." instance=ExtResource("18_styl8")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -9.49165, 0.334401, 0)
 
 [editable path="Box2"]
 [editable path="Box2/Root/Interactable"]

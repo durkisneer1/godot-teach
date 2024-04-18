@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://7cww5waiw6vb"]
+
+[ext_resource type="PackedScene" uid="uid://cji7vggohqdc7" path="res://props/car/car.glb" id="1_jok3r"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_bs5aw"]
+points = PackedVector3Array(-1, -0.142857, -1, -1, -0.142857, 1, -1, 0.142777, -1, 1, -0.142857, -1, -1, 0.142777, 1, 1, -0.142857, 1, -0.857283, 0.277446, -0.922866, 1, 0.142777, -1, -0.258027, 0.428505, 0.835944, -0.857283, 0.277446, 0.92267, 1, 0.142777, 1, -0.345341, 0.71386, -0.510376, -0.258027, 0.428505, -0.836139, 0.856891, 0.428505, -0.836139, -0.124511, 0.714233, 0.509789, -0.345341, 0.71386, 0.51018, 0.856891, 0.428505, 0.835944, -0.043657, 0.808575, -0.0814409, -0.124511, 0.714233, -0.509984, 0.555403, 0.714233, -0.509984, 0.555403, 0.714233, 0.509789, -0.043657, 0.808575, 0.0812451, 0.119029, 0.808575, -0.0814409, 0.119029, 0.808575, 0.0812451)
+
+[node name="car" instance=ExtResource("1_jok3r")]
+
+[node name="Cylinder_002" parent="." index="1"]
+transform = Transform3D(0.195151, 0, 0, 0, -3.34358e-09, -0.195151, 0, 0.0764922, -8.53034e-09, -0.542954, -0.130289, 0.573523)
+
+[node name="Cylinder_003" parent="." index="3"]
+transform = Transform3D(0.195151, 0, 0, 0, -3.34358e-09, -0.195151, 0, 0.0764922, -8.53034e-09, 0.610928, -0.130289, 0.573523)
+
+[node name="Cylinder_001" parent="." index="4"]
+transform = Transform3D(-0.195151, -1.155e-08, 1.28804e-15, 0, -3.34358e-09, -0.195151, 2.9467e-08, -0.0764922, 8.53034e-09, 0.62462, -0.130289, -0.575245)
+
+[node name="Cylinder_004" parent="." index="5"]
+transform = Transform3D(-0.195151, -1.155e-08, 1.28804e-15, 0, -3.34358e-09, -0.195151, 2.9467e-08, -0.0764922, 8.53034e-09, -0.529262, -0.130289, -0.575244)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." index="6"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.596877, 0, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_bs5aw")
