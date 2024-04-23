@@ -1,13 +1,10 @@
-[gd_scene load_steps=50 format=3 uid="uid://b8r35oo5f3665"]
+[gd_scene load_steps=43 format=3 uid="uid://b8r35oo5f3665"]
 
-[ext_resource type="Terrain3DStorage" uid="uid://uwjrhf3m4idc" path="res://assets/new_terrain_3d_storage.res" id="1_640gl"]
 [ext_resource type="Script" path="res://main.gd" id="1_knyo2"]
 [ext_resource type="Texture2D" uid="uid://cxs4xv7yuuj62" path="res://assets/gray_rocks_diff_1k.png" id="2_0704o"]
 [ext_resource type="Shader" path="res://assets/sky.gdshader" id="2_tip86"]
 [ext_resource type="Texture2D" uid="uid://k6w8su5j843x" path="res://assets/gray_rocks_nor_gl_1k.png" id="3_12d5u"]
 [ext_resource type="PackedScene" uid="uid://ybb6hnxg06x3" path="res://player/player.tscn" id="4_qtbdw"]
-[ext_resource type="Texture2D" uid="uid://d1nxxho7ous0d" path="res://assets/brown_mud_leaves_01_diff_1k.png" id="6_eeci7"]
-[ext_resource type="Texture2D" uid="uid://d0an2tv5an7by" path="res://assets/brown_mud_leaves_01_nor_gl_1k.png" id="7_ib0ji"]
 [ext_resource type="PackedScene" uid="uid://ddhlc7wm262q1" path="res://props/button/button.tscn" id="10_341v4"]
 [ext_resource type="PackedScene" uid="uid://r0ln23k0c6w1" path="res://props/box/Box.tscn" id="10_gpur1"]
 [ext_resource type="PackedScene" uid="uid://ceuavb8jmpgls" path="res://buildings/house.tscn" id="11_owsfe"]
@@ -62,64 +59,10 @@ tonemap_white = 0.75
 ssao_enabled = true
 sdfgi_enabled = true
 sdfgi_use_occlusion = true
-sdfgi_read_sky_light = false
 glow_enabled = true
 glow_normalized = true
 volumetric_fog_enabled = true
 volumetric_fog_density = 0.01
-
-[sub_resource type="Gradient" id="Gradient_18ucj"]
-offsets = PackedFloat32Array(0.2, 1)
-colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_sli6h"]
-noise_type = 2
-frequency = 0.03
-cellular_jitter = 3.0
-cellular_return_type = 0
-domain_warp_enabled = true
-domain_warp_type = 1
-domain_warp_amplitude = 50.0
-domain_warp_fractal_type = 2
-domain_warp_fractal_lacunarity = 1.5
-domain_warp_fractal_gain = 1.0
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_1634q"]
-seamless = true
-color_ramp = SubResource("Gradient_18ucj")
-noise = SubResource("FastNoiseLite_sli6h")
-
-[sub_resource type="Terrain3DMaterial" id="Terrain3DMaterial_ghn6m"]
-_shader_parameters = {
-"_mouse_layer": 2147483648,
-"blend_sharpness": null,
-"height_blending": null,
-"macro_variation1": null,
-"macro_variation2": null,
-"noise1_angle": null,
-"noise1_offset": null,
-"noise1_scale": null,
-"noise2_scale": null,
-"noise3_scale": null,
-"noise_texture": SubResource("NoiseTexture2D_1634q")
-}
-
-[sub_resource type="Terrain3DTexture" id="Terrain3DTexture_d24in"]
-name = "Rocks"
-albedo_texture = ExtResource("2_0704o")
-normal_texture = ExtResource("3_12d5u")
-uv_scale = 1.0
-uv_rotation = 0.323
-
-[sub_resource type="Terrain3DTexture" id="Terrain3DTexture_4yk11"]
-texture_id = 1
-albedo_texture = ExtResource("6_eeci7")
-normal_texture = ExtResource("7_ib0ji")
-uv_scale = 1.0
-uv_rotation = 0.354
-
-[sub_resource type="Terrain3DTextureList" id="Terrain3DTextureList_0qfci"]
-textures = Array[Terrain3DTexture]([SubResource("Terrain3DTexture_d24in"), SubResource("Terrain3DTexture_4yk11")])
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lnqp5"]
 
@@ -255,6 +198,19 @@ _data = {
 "button_press": SubResource("Animation_x8l38")
 }
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ctwv3"]
+albedo_texture = ExtResource("2_0704o")
+normal_enabled = true
+normal_texture = ExtResource("3_12d5u")
+uv1_scale = Vector3(100, 100, 100)
+
+[sub_resource type="BoxMesh" id="BoxMesh_u6wuj"]
+material = SubResource("StandardMaterial3D_ctwv3")
+size = Vector3(50, 1, 50)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_63cav"]
+data = PackedVector3Array(-25, 0.5, 25, 25, 0.5, 25, -25, -0.5, 25, 25, 0.5, 25, 25, -0.5, 25, -25, -0.5, 25, 25, 0.5, -25, -25, 0.5, -25, 25, -0.5, -25, -25, 0.5, -25, -25, -0.5, -25, 25, -0.5, -25, 25, 0.5, 25, 25, 0.5, -25, 25, -0.5, 25, 25, 0.5, -25, 25, -0.5, -25, 25, -0.5, 25, -25, 0.5, -25, -25, 0.5, 25, -25, -0.5, -25, -25, 0.5, 25, -25, -0.5, 25, -25, -0.5, -25, 25, 0.5, 25, -25, 0.5, 25, 25, 0.5, -25, -25, 0.5, 25, -25, 0.5, -25, 25, 0.5, -25, -25, -0.5, 25, 25, -0.5, 25, -25, -0.5, -25, 25, -0.5, 25, 25, -0.5, -25, -25, -0.5, -25)
+
 [node name="Main" type="Node3D"]
 script = ExtResource("1_knyo2")
 
@@ -262,14 +218,8 @@ script = ExtResource("1_knyo2")
 environment = SubResource("Environment_02gqj")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.891374, -0.271736, 0.362784, 0.398746, -0.0895154, 0.912682, -0.215534, 0.9582, 0.188145, 0, 2.2213, 0)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
 shadow_enabled = true
-
-[node name="Terrain3D" type="Terrain3D" parent="."]
-storage = ExtResource("1_640gl")
-material = SubResource("Terrain3DMaterial_ghn6m")
-texture_list = SubResource("Terrain3DTextureList_0qfci")
-collision_mask = 0
 
 [node name="Player" parent="." instance=ExtResource("4_qtbdw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -349,6 +299,20 @@ libraries = {
 
 [node name="car" parent="." instance=ExtResource("18_styl8")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -9.49165, 0.775957, 0)
+
+[node name="Ground" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+mesh = SubResource("BoxMesh_u6wuj")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Ground"]
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_63cav")
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 8.26, 4.875, 0)
+light_color = Color(1, 0.584314, 0.333333, 1)
 
 [editable path="Box2"]
 [editable path="Box2/Root/Interactable"]

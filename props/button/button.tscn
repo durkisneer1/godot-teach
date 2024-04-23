@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://ddhlc7wm262q1"]
 
-[ext_resource type="PackedScene" uid="uid://drhiqj2fji0ui" path="res://props/button/button.glb" id="1_3pwgw"]
+[ext_resource type="PackedScene" uid="uid://bg573ul3gmvye" path="res://assets/button.glb" id="1_3pwgw"]
 [ext_resource type="Script" path="res://props/button/button.gd" id="2_6c0du"]
 [ext_resource type="PackedScene" uid="uid://dqx7jwtnnbmj4" path="res://interaction/Interactable.tscn" id="2_lty8y"]
 
@@ -9,6 +9,9 @@ size = Vector3(1.915, 1.17, 0.59)
 
 [node name="Button" instance=ExtResource("1_3pwgw")]
 script = ExtResource("2_6c0du")
+
+[node name="Cube" parent="." index="0"]
+transform = Transform3D(-1.28511e-08, 0, -1.103, 0, 0.613, 0, 0.294, 0, -4.82137e-08, 0, 0, 0)
 
 [node name="Interactable" parent="." index="1" instance=ExtResource("2_lty8y")]
 

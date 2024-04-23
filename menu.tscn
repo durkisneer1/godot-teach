@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://q6lefpe4enuo"]
+
+[ext_resource type="Script" path="res://menu.gd" id="1_hlwnw"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_yp4hb"]
+font_size = 106
+
+[node name="Menu" type="CanvasLayer"]
+script = ExtResource("1_hlwnw")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 1920.0
+offset_bottom = 1080.0
+color = Color(0.164706, 0.164706, 0.164706, 1)
+
+[node name="StartButton" type="Button" parent="."]
+offset_left = 858.0
+offset_top = 824.0
+offset_right = 914.0
+offset_bottom = 855.0
+scale = Vector2(4, 4)
+text = "START"
+
+[node name="Label" type="Label" parent="."]
+offset_left = 504.0
+offset_top = 130.0
+offset_right = 1411.0
+offset_bottom = 276.0
+text = "SHOWCASE GAME"
+label_settings = SubResource("LabelSettings_yp4hb")

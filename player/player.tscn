@@ -1,44 +1,30 @@
-[gd_scene load_steps=6 format=3 uid="uid://ybb6hnxg06x3"]
+[gd_scene load_steps=4 format=3 uid="uid://ybb6hnxg06x3"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_qivkk"]
-[ext_resource type="PackedScene" uid="uid://dxojbaivvs486" path="res://player/animations.tscn" id="2_u1111"]
 [ext_resource type="PackedScene" uid="uid://cd8fgo386pidw" path="res://interaction/player_interactor.tscn" id="3_eu2xu"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_651b5"]
 radius = 0.375919
-
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_5yec2"]
-radius = 1.1
 
 [node name="Player" type="CharacterBody3D"]
 collision_layer = 4
 collision_mask = 3
 script = ExtResource("1_qivkk")
 
-[node name="Mesh" type="Node3D" parent="."]
-
-[node name="animations" parent="Mesh" instance=ExtResource("2_u1111")]
-transform = Transform3D(-1.1, 0, -9.61651e-08, 0, 1.1, 0, 9.61651e-08, 0, -1.1, 0, -1, 0)
-
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_651b5")
-
-[node name="PlayerInteractor" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_eu2xu")]
-player = NodePath("..")
-
-[node name="CollisionShape3D" parent="PlayerInteractor" index="0"]
-shape = SubResource("CylinderShape3D_5yec2")
 
 [node name="Head" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 
-[node name="SpringArm3D" type="SpringArm3D" parent="Head"]
-transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, 0, 0, 0)
-spring_length = 1.75
-
-[node name="Camera3D" type="Camera3D" parent="Head/SpringArm3D"]
-transform = Transform3D(0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866025, 0, 0, 1.75)
+[node name="Camera3D" type="Camera3D" parent="Head"]
 near = 0.1
 far = 1000.0
 
-[editable path="PlayerInteractor"]
+[node name="SpotLight3D" type="SpotLight3D" parent="Head"]
+light_energy = 2.0
+spot_range = 6.69555
+spot_angle = 40.7813
+
+[node name="PlayerInteractor" parent="Head" instance=ExtResource("3_eu2xu")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
