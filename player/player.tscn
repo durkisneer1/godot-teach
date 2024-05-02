@@ -1,30 +1,97 @@
-[gd_scene load_steps=4 format=3 uid="uid://ybb6hnxg06x3"]
+[gd_scene load_steps=13 format=3 uid="uid://cklioch73nr60"]
 
-[ext_resource type="Script" path="res://player/player.gd" id="1_qivkk"]
-[ext_resource type="PackedScene" uid="uid://cd8fgo386pidw" path="res://interaction/player_interactor.tscn" id="3_eu2xu"]
+[ext_resource type="Script" path="res://player/player.gd" id="1_ij5ic"]
+[ext_resource type="Texture2D" uid="uid://c6a8lgn7kymid" path="res://assets/light_cookie.jpg" id="2_8gfp4"]
+[ext_resource type="AudioStream" uid="uid://dlx38byv5hw8c" path="res://assets/sounds/ESM_Fantasy_Game_Footstep_Grass_Light_C.ogg" id="3_id0kj"]
+[ext_resource type="AudioStream" uid="uid://dh5xq0mb6jome" path="res://assets/sounds/ESM_Fantasy_Game_Footstep_Grass_Light_D.ogg" id="4_v2dkx"]
+[ext_resource type="AudioStream" uid="uid://j3milktjxncg" path="res://assets/sounds/ESM_Fantasy_Game_Footstep_Grass_Medium_Av.ogg" id="5_axy2q"]
+[ext_resource type="AudioStream" uid="uid://6v36ngx8bo1o" path="res://assets/sounds/ESM_Fantasy_Game_Footstep_Grass_Medium_E.ogg" id="6_1s237"]
+[ext_resource type="AudioStream" uid="uid://1hnm6n8wkyw6" path="res://assets/sounds/ESM_Fantasy_Game_Footstep_Grass_Medium_F.ogg" id="7_ag1ur"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_651b5"]
-radius = 0.375919
+[sub_resource type="Animation" id="Animation_0dktm"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Torso/Pivot:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0.5, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_iumjy"]
+resource_name = "head_bob"
+length = 0.7
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Torso/Pivot:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.35, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0.5, 0), Vector3(0, 0.55, 0), Vector3(0, 0.5, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gkcn2"]
+_data = {
+"RESET": SubResource("Animation_0dktm"),
+"head_bob": SubResource("Animation_iumjy")
+}
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_bgyjo"]
+streams_count = 5
+stream_0/stream = ExtResource("3_id0kj")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("4_v2dkx")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("5_axy2q")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("6_1s237")
+stream_3/weight = 1.0
+stream_4/stream = ExtResource("7_ag1ur")
+stream_4/weight = 1.0
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5wrky"]
 
 [node name="Player" type="CharacterBody3D"]
-collision_layer = 4
-collision_mask = 3
-script = ExtResource("1_qivkk")
+script = ExtResource("1_ij5ic")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("CapsuleShape3D_651b5")
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_gkcn2")
+}
 
-[node name="Head" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+[node name="Footsteps" type="AudioStreamPlayer3D" parent="."]
+stream = SubResource("AudioStreamRandomizer_bgyjo")
+volume_db = -32.0
 
-[node name="Camera3D" type="Camera3D" parent="Head"]
-near = 0.1
-far = 1000.0
+[node name="Light" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+light_projector = ExtResource("2_8gfp4")
+shadow_enabled = true
+distance_fade_enabled = true
+spot_range = 10.0
+spot_angle = 28.8624
+spot_angle_attenuation = 0.25
 
-[node name="SpotLight3D" type="SpotLight3D" parent="Head"]
-light_energy = 2.0
-spot_range = 6.69555
-spot_angle = 40.7813
+[node name="Collider" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_5wrky")
 
-[node name="PlayerInteractor" parent="Head" instance=ExtResource("3_eu2xu")]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+[node name="Body" type="Node3D" parent="."]
+
+[node name="Head" type="Node3D" parent="Body"]
+
+[node name="Torso" type="Node3D" parent="."]
+
+[node name="Pivot" type="Node3D" parent="Torso"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="Camera" type="Camera3D" parent="Torso/Pivot"]

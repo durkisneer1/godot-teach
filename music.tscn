@@ -1,8 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://co55fmynxga8p"]
-
-[ext_resource type="AudioStream" uid="uid://cpwgqjcmb4dg3" path="res://assets/dune.ogg" id="1_5pqij"]
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer"]
-stream = ExtResource("1_5pqij")
-volume_db = 16.0
-autoplay = true

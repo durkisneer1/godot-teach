@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://uxi177r8ahqw"]
+
+[ext_resource type="Shader" path="res://shaders/chromatic_aberration.gdshader" id="1_vte1g"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_acl47"]
+shader = ExtResource("1_vte1g")
+shader_parameter/r_displacement = Vector2(5, 0)
+shader_parameter/g_displacement = Vector2(0, 0)
+shader_parameter/b_displacement = Vector2(-5, 0)
+shader_parameter/height = 0.7
+shader_parameter/width = 0.6
+shader_parameter/fade = 0.7
+
+[node name="ShaderLayer" type="CanvasLayer"]
+
+[node name="ChromaticAberration" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_acl47")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
